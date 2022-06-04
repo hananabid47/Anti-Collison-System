@@ -1,0 +1,33 @@
+#include <Stepper.h>
+
+const int stepsPerRevolution = 2048;  // 2048
+// ULN2003 Motor Driver Pins
+#define IN1 19
+#define IN2 18
+#define IN3 5
+#define IN4 4
+int echo=22;
+// initialize the stepper library
+Stepper myStepper(stepsPerRevolution, IN1, IN3, IN2, IN4);
+
+void setup() {
+  // set the speed at 5 rpm
+  myStepper.setSpeed(12);
+  // initialize the serial port
+  Serial.begin(115200);
+  //Distance
+ 
+  pinMode(echo,INPUT);
+}
+
+void loop() {
+  int val=digitalRead(echo);
+  if(val==LOW){
+    Serial.println("high");
+   myStepper.step(-stepsPerRevolution);
+  }
+  else {
+   myStepper.step(stepsPerRevolution);
+  }
+   
+}
